@@ -1,0 +1,15 @@
+from selenium.webdriver.common.by import By
+
+
+class InventoryPage:
+    def init(self, driver):
+        self.driver = driver
+        self.item_locator = "//div[text()='{}']/ancestor::div[@class='inventory_item']//button"
+        self.cart_button = (By.CLASS_NAME, "shopping_cart_link")
+
+    def add_item_to_cart(self, item_name):
+        locator = (By.XPATH, self.item_locator.format(item_name))
+        self.driver.find_element(*locator).click()
+
+    def go_to_cart(self):
+        self.driver.find_element(*self.cart_button).click()
