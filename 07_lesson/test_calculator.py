@@ -1,26 +1,30 @@
 import pytest
 from selenium import webdriver
 from calc_page import CalculatorPage
-import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
-@pytest.fixture(scope="class")
-def setup(self):
-    self.driver = webdriver.Edge()
-    self.driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-    yield
-    self.driver.quit()
+@pytest.fixture
+def setup():
+    driver = webdriver.Edge()
+    driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
+    yield driver
+    driver.quit()
 
 
-def test_calculator(self, setup):
-    calculator = CalculatorPage(self.driver)
+def test_calculator(setup):
+    calculator = CalculatorPage(setup)
     calculator.enter_delay("45")
     calculator.click_number(7)
     calculator.click_operator("+")
     calculator.click_number(8)
     calculator.click_equal()
 
-    time.sleep(45)
+    WebDriverWait(setup, 60).until(
+        EC.visibility_of_element_located((By.ID, "result"))
+    )
 
     result = calculator.get_result()
     assert result == "15"
