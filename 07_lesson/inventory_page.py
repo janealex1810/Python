@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class InventoryPage:
-    def init(self, driver):
+    def __init__(self, driver):
         self.driver = driver
         self.item_locator = "//div[text()='{}']/ancestor::div[@class='inventory_item']//button"
         self.cart_button = (By.CLASS_NAME, "shopping_cart_link")

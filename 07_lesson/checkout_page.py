@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class CheckoutPage:
-    def init(self, driver):
+    def __init__(self, driver):
         self.driver = driver
         self.first_name_field = (By.ID, "first-name")
         self.last_name_field = (By.ID, "last-name")
