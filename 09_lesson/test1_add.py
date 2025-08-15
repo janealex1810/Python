@@ -14,10 +14,11 @@ def test_create_student(session):
 
     # Проверка результатов
     created_student = session.query(Student).filter_by(email="ivan@example.com").first()
+
     assert created_student is not None
-    assert created_student.name == "Иван Иванов"
+    assert created_student.name == test_student.name
     assert created_student.is_active is True
 
-    # Очистка (хотя таблица удалится в фикстуре)
+    # Очистка после теста
     session.delete(created_student)
     session.commit()
